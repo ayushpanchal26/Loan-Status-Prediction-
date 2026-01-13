@@ -1,0 +1,97 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>Loan Approval Predictor</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <style>
+    body { font-family: Arial, sans-serif; max-width: 760px; margin: 30px auto; padding: 0 16px; }
+    label { display:block; margin-top:12px; font-weight:600; }
+    input[type="text"], input[type="number"], select { width:100%; padding:8px; margin-top:6px; box-sizing:border-box; }
+    button { margin-top:18px; padding:10px 16px; font-size:16px; }
+    .result { margin-top:18px; font-size:18px; font-weight:700; }
+    .row { display:flex; gap:12px; }
+    .col { flex:1; }
+  </style>
+</head>
+<body>
+  <h1>Loan Approval Predictor</h1>
+  <form method="post">
+    <label for="Gender">Gender</label>
+    <select id="Gender" name="Gender" required>
+      <option value="Male" {{ 'selected' if input_values.get('Gender')=='Male' else '' }}>Male</option>
+      <option value="Female" {{ 'selected' if input_values.get('Gender')=='Female' else '' }}>Female</option>
+    </select>
+
+    <label for="Married">Married</label>
+    <select id="Married" name="Married" required>
+      <option value="Yes" {{ 'selected' if input_values.get('Married')=='Yes' else '' }}>Yes</option>
+      <option value="No" {{ 'selected' if input_values.get('Married')=='No' else '' }}>No</option>
+    </select>
+
+    <label for="Dependents">Dependents</label>
+    <select id="Dependents" name="Dependents" required>
+      <option value="0" {{ 'selected' if input_values.get('Dependents')=='0' else '' }}>0</option>
+      <option value="1" {{ 'selected' if input_values.get('Dependents')=='1' else '' }}>1</option>
+      <option value="2" {{ 'selected' if input_values.get('Dependents')=='2' else '' }}>2</option>
+      <option value="3+" {{ 'selected' if input_values.get('Dependents')=='3+' else '' }}>3+</option>
+    </select>
+
+    <label for="Education">Education</label>
+    <select id="Education" name="Education" required>
+      <option value="Graduate" {{ 'selected' if input_values.get('Education')=='Graduate' else '' }}>Graduate</option>
+      <option value="Not Graduate" {{ 'selected' if input_values.get('Education')=='Not Graduate' else '' }}>Not Graduate</option>
+    </select>
+
+    <label for="Self_Employed">Self Employed</label>
+    <select id="Self_Employed" name="Self_Employed" required>
+      <option value="No" {{ 'selected' if input_values.get('Self_Employed')=='No' else '' }}>No</option>
+      <option value="Yes" {{ 'selected' if input_values.get('Self_Employed')=='Yes' else '' }}>Yes</option>
+    </select>
+
+    <div class="row">
+      <div class="col">
+        <label for="ApplicantIncome">Applicant Income</label>
+        <input id="ApplicantIncome" name="ApplicantIncome" type="number" step="any" required value="{{ input_values.get('ApplicantIncome','') }}">
+      </div>
+      <div class="col">
+        <label for="CoapplicantIncome">Coapplicant Income</label>
+        <input id="CoapplicantIncome" name="CoapplicantIncome" type="number" step="any" required value="{{ input_values.get('CoapplicantIncome','') }}">
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col">
+        <label for="LoanAmount">Loan Amount (in the same units used for training)</label>
+        <input id="LoanAmount" name="LoanAmount" type="number" step="any" required value="{{ input_values.get('LoanAmount','') }}">
+      </div>
+      <div class="col">
+        <label for="Loan_Amount_Term">Loan Amount Term (months)</label>
+        <input id="Loan_Amount_Term" name="Loan_Amount_Term" type="number" step="1" required value="{{ input_values.get('Loan_Amount_Term','') }}">
+      </div>
+    </div>
+
+    <label for="Credit_History">Credit History</label>
+    <select id="Credit_History" name="Credit_History" required>
+      <option value="1" {{ 'selected' if input_values.get('Credit_History') in ('1','Yes','yes') else '' }}>1 (Has credit history)</option>
+      <option value="0" {{ 'selected' if input_values.get('Credit_History') in ('0','No','no') else '' }}>0 (No credit history)</option>
+    </select>
+
+    <label for="Property_Area">Property Area</label>
+    <select id="Property_Area" name="Property_Area" required>
+      <option value="Rural" {{ 'selected' if input_values.get('Property_Area')=='Rural' else '' }}>Rural</option>
+      <option value="Semiurban" {{ 'selected' if input_values.get('Property_Area')=='Semiurban' else '' }}>Semiurban</option>
+      <option value="Urban" {{ 'selected' if input_values.get('Property_Area')=='Urban' else '' }}>Urban</option>
+    </select>
+
+    <button type="submit">Predict</button>
+  </form>
+
+  {% if result %}
+    <div class="result">Result: {{ result }}</div>
+  {% endif %}
+
+  <hr>
+  <p><small>Note: The app uses the same mappings and feature order used when training the model in the notebook.</small></p>
+</body>
+</html>
