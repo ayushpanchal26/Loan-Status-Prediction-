@@ -6,11 +6,11 @@ A small Flask web app that loads an SVM loan-approval model (saved as `model.pkl
 
 ## Project structure
 loan-pred-flask/
-├─ app.py
-├─ model.pkl
-├─ requirements.txt
-└─ templates/
-└─ index.html
+- ├─ app.py
+- ├─ model.pkl
+- ├─ requirements.txt
+- └─ templates/
+- └─ index.html
 
 ## About the model
 - The model was trained in `loan_status_prediction.ipynb`.
